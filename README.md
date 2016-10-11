@@ -27,7 +27,7 @@ POST http://localhost:8080/test/get-sales-by-period
 }
 ```
 
-Выбираем продажи за период в конкретном магазине
+Выбираем продажи за период в списке магазинов
 ```
 POST http://localhost:8080/test/get-sales-by-shop
 {
