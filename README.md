@@ -16,7 +16,6 @@ CREATE TABLE sales (
 )
 WITH CLUSTERING ORDER BY (sale_date DESC);
 ```
-
 Запросы:
 
 1. Выбираем продажи за заданный период
