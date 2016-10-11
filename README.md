@@ -1,7 +1,6 @@
-# salesstorage
-
 Cassandra:
 
+```
 create keyspace dev with replication = {'class':'SimpleStrategy','replication_factor':1};
 
 CREATE TABLE sales (
@@ -16,17 +15,25 @@ CREATE TABLE sales (
   PRIMARY KEY (shop_id, sale_date, sale_id)
 )
 WITH CLUSTERING ORDER BY (sale_date DESC);
+```
 
-Requests:
-1 POST http://localhost:8080/test/get-sales-by-period
+Запросы:
+
+1. Выбираем продажи за заданный период
+```
+POST http://localhost:8080/test/get-sales-by-period
 {
-  "from": "2016-01-01T00:00:00",
-  "to": "2017-01-01T00:00:00"
+	"from": "2016-01-01T00:00:00",
+  	"to": "2017-01-01T00:00:00"
 }
+```
 
-2 POST http://localhost:8080/test/get-sales-by-shop
+2. Выбираем продажи за период в конкретном магазине
+```
+POST http://localhost:8080/test/get-sales-by-shop
 {
 	"shop": [],
-  "from": "2016-01-01T00:00:00",
-  "to": "2017-01-01T00:00:00"
+  	"from": "2016-01-01T00:00:00",
+  	"to": "2017-01-01T00:00:00"
 }
+```
