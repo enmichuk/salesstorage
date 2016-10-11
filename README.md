@@ -18,7 +18,7 @@ WITH CLUSTERING ORDER BY (sale_date DESC);
 ```
 Запросы:
 
-1. Выбираем продажи за заданный период
+Выбираем продажи за заданный период
 ```
 POST http://localhost:8080/test/get-sales-by-period
 {
@@ -27,7 +27,7 @@ POST http://localhost:8080/test/get-sales-by-period
 }
 ```
 
-2. Выбираем продажи за период в конкретном магазине
+Выбираем продажи за период в конкретном магазине
 ```
 POST http://localhost:8080/test/get-sales-by-shop
 {
