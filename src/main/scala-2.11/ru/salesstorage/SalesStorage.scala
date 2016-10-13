@@ -17,7 +17,6 @@ object SalesStorage extends App{
   val endpoint = new WebEndpoint("localhost", 8080, salesService)
 
   Future {
-    println("Press enter to stop server")
     StdIn.readLine()
     endpoint.stopEndpoint.foreach(_ => actorSystem.terminate().foreach(println))
   }

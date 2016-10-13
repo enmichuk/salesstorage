@@ -8,6 +8,7 @@ import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import SalesJsonProtocol._
+import akka.event.LoggingAdapter
 import akka.http.scaladsl.server.StandardRoute
 import spray.json._
 
@@ -17,13 +18,17 @@ trait SalesRoute extends SalesStorageRoute {
 
   def salesService: ActorRef
 
+  def logger: LoggingAdapter
+
+  /**
+    * Ошибки передаются на клиента исключительно ради удобства при разработке
+    */
   val processResponse: PartialFunction[Try[Any], StandardRoute] = {
-    case Success(GetSalesResponse(sales)) =>
-      complete(sales)
-    case Success(GetSalesErrorResponse(error)) =>
+    case Success(GetSalesResponse(sales)) => complete(sales)
+    case Success(GetSalesErrorResponse(error)) => complete(error.getMessage)
+    case Failure(error) =>
+      logger.error(error, "Error while getting sales")
       complete(error.getMessage)
-    case Failure(error)                   =>
-      complete(StatusCodes.InternalServerError)
   }
 
   val salesRoute =

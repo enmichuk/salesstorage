@@ -11,7 +11,8 @@ resolvers ++= Seq(
 )
 
 val phantomV = "1.29.3"
-val akkaV = "2.4.6"
+val akkaV = "2.4.2"
+val sparkV = "2.0.1"
 
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % akkaV,
@@ -21,6 +22,10 @@ libraryDependencies ++= Seq(
   "com.websudos" %% "phantom-dsl" % phantomV,
   "com.websudos" %% "phantom-connectors" % phantomV,
   "com.datastax.cassandra" % "cassandra-driver-core" % "3.1.1",
-  "com.typesafe" % "config" % "1.3.1"
+  "com.typesafe" % "config" % "1.3.1",
+  "org.apache.spark" %% "spark-core" % sparkV,
+  "org.apache.spark" %% "spark-streaming" % sparkV,
+  "org.apache.spark" %% "spark-sql" % sparkV,
+  "com.datastax.spark" %% "spark-cassandra-connector" % "2.0.0-M3"
 )
     
