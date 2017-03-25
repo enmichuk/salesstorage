@@ -1,20 +1,16 @@
 package ru.salesstorage.services
 
-import java.text.SimpleDateFormat
-
-import ru.salesstorage.entities.Sale
 import java.util.Date
 
 import akka.actor.{Actor, ActorLogging, ActorRef}
 import ru.salesstorage.dao.phantom.sales.SalesPhantomDaoService
 import ru.salesstorage.dao.spark.sales.SalesSparkDaoService
+import ru.salesstorage.entities.Sale
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 object SalesService {
-
-  object CreateSales
 
   case class GetSalesByPeriodRequest(from: Date, to: Date)
   
@@ -36,14 +32,6 @@ class SalesService extends Actor with ActorLogging{
 
   implicit val ec = context.dispatcher
 
-  override def preStart() = {
-    SalesPhantomDaoService.sales.createTable().onComplete {
-      case Success(_) => self ! CreateSales
-      case Failure(error) =>
-      log.error(error, "Error auto creating sales table in cassandra")
-    }
-  }
-
   override def receive = {
     case GetSalesByPeriodRequest(from, to) =>
       val replyTo = sender()
@@ -64,16 +52,6 @@ class SalesService extends Actor with ActorLogging{
       val replyTo = sender()
       Future(SalesSparkDaoService.find(shop, price_from, price_to, from, to))
         .onComplete(processFind(replyTo, _))
-
-    case CreateSales =>
-      val simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd")
-      val sales = (for(i <- 1 to 9) yield  {
-        Sale(
-          shop_id = i, sale_id = i, sale_date = simpleDateFormat.parse("2016-01-0" + i),
-          product_id = i, product_count = i, price = i, category_id = i, vendor_id = i
-        )
-      }).toList
-      SalesPhantomDaoService.sales.create(sales)
   }
 
   def processFind(replyTo: ActorRef, find: Try[Seq[Sale]]) = {

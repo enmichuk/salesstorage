@@ -14,6 +14,6 @@ trait Connector {
 
 object CassandraConnection extends AppConfiguration {
 
-  val manager = ContactPoint.local.keySpace(cassandra.keyspace)
+  val manager = ContactPoints.apply(cassandra.hosts, cassandra.port).keySpace(cassandra.keyspace)
 
 }

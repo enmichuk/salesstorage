@@ -40,6 +40,7 @@ abstract class SalesDao extends Sales with Connector {
       .and(_.sale_date lt to)
       .allowFiltering().fetch()
   }
+
   def find(shop_ids: List[Int], from: Date, to: Date): Future[List[Sale]] = {
     select
       .where(_.shop_id in shop_ids)
@@ -47,6 +48,7 @@ abstract class SalesDao extends Sales with Connector {
       .and(_.sale_date lt to)
       .fetch()
   }
+
   def create(sales: List[Sale]) = {
 
     def insertFutureList() = {
@@ -68,6 +70,7 @@ abstract class SalesDao extends Sales with Connector {
 
     Future.sequence(insertFutureList())
   }
+
   def createTable() = {
     autocreate(space).future()
   }

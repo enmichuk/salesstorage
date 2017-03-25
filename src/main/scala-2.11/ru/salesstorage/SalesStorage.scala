@@ -1,11 +1,11 @@
 package ru.salesstorage
 
-import akka.actor.ActorSystem
-import akka.actor.Props
-import scala.io.StdIn
-import scala.concurrent.Future
-import ru.salesstorage.web.WebEndpoint
+import akka.actor.{ActorSystem, Props}
 import ru.salesstorage.services.SalesService
+import ru.salesstorage.web.WebEndpoint
+
+import scala.concurrent.Future
+import scala.io.StdIn
 
 object SalesStorage extends App{
 

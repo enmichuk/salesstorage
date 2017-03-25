@@ -1,22 +1,20 @@
 package ru.salesstorage.web
 
-import akka.stream.ActorMaterializer
-import akka.actor.{ActorLogging, ActorRef, ActorSystem}
-import akka.util.Timeout
+import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.Http
-
-import scala.concurrent.Future
 import akka.http.scaladsl.Http.ServerBinding
+import akka.stream.ActorMaterializer
+import akka.util.Timeout
 import ru.salesstorage.web.sales.SalesRoute
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 class WebEndpoint(
                    host: String,
                    port: Int,
                    val salesService: ActorRef
-                 )
-                 (implicit actorSystem: ActorSystem) extends SalesRoute{
+                 )(implicit actorSystem: ActorSystem) extends SalesRoute{
 
   implicit val timeout = Timeout(10 seconds)
   implicit val materializer = ActorMaterializer()
